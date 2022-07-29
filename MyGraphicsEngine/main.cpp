@@ -6,8 +6,6 @@
 const unsigned int window_width = 1600;
 const unsigned int window_height = 900;
 
-
-
 int main ()
 {
 	//Initialize GLFW
@@ -29,13 +27,16 @@ int main ()
 	}
 	// Introduce the window into the current context so we can use it
 	glfwMakeContextCurrent(window);
-	//load configurations for opengl
+	/****************************************************************************/
+	// load configurations for opengl, this needs to be called before 
+	//	glViewport, glClearColor, glClear, glfwSwapBuffers
 	gladLoadGL();
 	//Set viewport and background clear color
 	glViewport(0, 0, window_width, window_height);
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(window);
+	/****************************************************************************/
 
 	//MAIN WHILE LOOP
 	while (!glfwWindowShouldClose(window))
