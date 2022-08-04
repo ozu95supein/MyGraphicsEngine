@@ -5,7 +5,9 @@
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
-
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
 // Vertex Shader source code
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -27,6 +29,10 @@ const char* fragmentShaderSource = "#version 330 core\n"
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
+const int & InitialWindowWidth = 800;
+const int & InitialWindowHeight = 800;
+
+glm::vec4 InitialClearColor = { 0.07f, 0.13f, 0.17f, 1.0f };
 
 int main()
 {
@@ -57,8 +63,7 @@ int main()
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, 800, 800);
-
+	glViewport(0, 0, InitialWindowWidth, InitialWindowHeight);
 
 
 	// Create Vertex Shader Object and get its reference
@@ -86,7 +91,6 @@ int main()
 	// Delete the now useless Vertex and Fragment Shader objects
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-
 
 
 	// Vertices coordinates
@@ -139,14 +143,15 @@ int main()
 	glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
 	glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
 
+	// Specify the color of the background
+	glClearColor(InitialClearColor.x, InitialClearColor.y, InitialClearColor.z, InitialClearColor.w);
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		//Process Input from the user 
 		processInput(window);
 
-		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -154,8 +159,6 @@ int main()
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-
-
 
 		// Tell OpenGL which Shader Program we want to use
 		glUseProgram(shaderProgram);
