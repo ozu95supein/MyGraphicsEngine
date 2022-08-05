@@ -149,6 +149,10 @@ void CustomShader::setFloat4(const std::string& name, float value_x, float value
 {
     glUniform4f(glGetUniformLocation(ID, name.c_str()), value_x, value_y, value_z, value_w);
 }
+void CustomShader::setMatrix4(const std::string& name, glm::mat4 * mat) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, (const GLfloat *)mat);
+}
 GLuint CustomShader::GetID()
 {
     return ID;

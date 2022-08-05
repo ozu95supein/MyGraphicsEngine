@@ -27,6 +27,7 @@ public:
     void setInt(const std::string& name, int value) const;
     void setFloat(const std::string& name, float value) const;
     void setFloat4(const std::string& name, float value_x, float value_y, float value_z, float value_w) const;
+    void setMatrix4(const std::string& name, glm::mat4 * mat) const;
     GLuint GetID();
 private:
     // the program ID
