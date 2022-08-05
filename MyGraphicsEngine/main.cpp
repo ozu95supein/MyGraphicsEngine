@@ -52,7 +52,7 @@ int main()
 	glViewport(0, 0, InitialWindowWidth, InitialWindowHeight);
 
 	CustomShader myShader("default.vert", "default.frag");
-
+	glEnable(GL_DEPTH_TEST);
 	// Vertices coordinates
 	GLfloat vertices[] =
 	{
@@ -136,7 +136,7 @@ int main()
 		processInput(window);
 
 		// Clean the back buffer and assign the new color to it
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Tell OpenGL a new frame is about to begin
 		ImGui_ImplOpenGL3_NewFrame();
@@ -144,7 +144,7 @@ int main()
 		ImGui::NewFrame();
 
 
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(0.01f), glm::vec3(0.5f, 1.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(0.1f), glm::vec3(0.0f, 0.0f, 1.0f));
 		myShader.setMatrix4("model", &model);
 
 		// Tell OpenGL which Shader Program we want to use
