@@ -15,8 +15,13 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
+
 const int & InitialWindowWidth = 800;
 const int & InitialWindowHeight = 800;
+
+float deltaTime = 0.0f;  //Gloabal value, time between current frame and last frame
+float lastFrame = 0.0f;  //Gloabal value, time of last frame
+void UpdateDeltaTime();
 
 glm::vec4 InitialClearColor = { 0.07f, 0.13f, 0.17f, 1.0f };
 
@@ -132,6 +137,9 @@ int main()
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
+		//Update the delta time global values
+		UpdateDeltaTime();
+
 		//Process Input from the user 
 		processInput(window);
 
@@ -215,4 +223,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
+}
+void UpdateDeltaTime()
+{
+	float currentFrame = glfwGetTime();
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
 }
