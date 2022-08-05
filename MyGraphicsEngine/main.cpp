@@ -105,11 +105,26 @@ int main()
 	myShader.setFloat4("color", color[0], color[1], color[2], color[3]);
 	
 	//Matrix Stuff placed here for now
+	///////////////////////////////////////////////////////////////////////////
 	glm::mat4 trans = glm::mat4(1.0f);
 	trans = glm::translate(trans, glm::vec3(0.0f, 0.0f, 0.0f));
 	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
 	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
 	myShader.setMatrix4("transform", &trans);
+
+	//projection matrix
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::mat4 view = glm::mat4(1.0f);
+	// note that we're translating the scene in the reverse direction of where we want to move
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(45.0f), (float)InitialWindowWidth / (float)InitialWindowHeight, 0.1f, 100.0f);
+
+	myShader.setMatrix4("model", &model);
+	myShader.setMatrix4("view", &view);
+	myShader.setMatrix4("projection", &projection);
+	///////////////////////////////////////////////////////////////////////////
 
 	// Specify the color of the background
 	glClearColor(InitialClearColor.x, InitialClearColor.y, InitialClearColor.z, InitialClearColor.w);
@@ -128,10 +143,9 @@ int main()
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		//rotation and translation over time
-		trans = glm::translate(trans, glm::vec3(0.05f, -0.05f, 0.0f));
-		trans = glm::rotate(trans, (GLfloat)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		myShader.setMatrix4("transform", &trans);
+
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(0.01f), glm::vec3(0.5f, 1.0f, 0.0f));
+		myShader.setMatrix4("model", &model);
 
 		// Tell OpenGL which Shader Program we want to use
 		myShader.use();
