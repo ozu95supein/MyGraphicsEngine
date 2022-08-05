@@ -9,8 +9,9 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 
-#include "CustomShader.h"
+#include "CustomShader.h"		//my custom shader class code is here
 
+//callbacks for input and window events
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
@@ -103,6 +104,15 @@ int main()
 	myShader.setFloat("size", size);
 	myShader.setFloat4("color", color[0], color[1], color[2], color[3]);
 	
+	//Matrix Stuff placed here for now
+	glm::mat4 trans = glm::mat4(1.0f);
+	trans = glm::translate(trans, glm::vec3(0.0f, 0.0f, 0.0f));
+	trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+	
+	unsigned int transformLoc = glGetUniformLocation(myShader.GetID(), "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
 	// Specify the color of the background
 	glClearColor(InitialClearColor.x, InitialClearColor.y, InitialClearColor.z, InitialClearColor.w);
 
@@ -119,7 +129,13 @@ int main()
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		//TODO replace with shader class function
+
+		//rotation and translation over time
+		trans = glm::translate(trans, glm::vec3(0.05f, -0.05f, 0.0f));
+		trans = glm::rotate(trans, (GLfloat)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		transformLoc = glGetUniformLocation(myShader.GetID(), "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+
 		// Tell OpenGL which Shader Program we want to use
 		myShader.use();
 		// Bind the VAO so OpenGL knows to use it
