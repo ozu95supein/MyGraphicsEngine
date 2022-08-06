@@ -10,10 +10,11 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #include "CustomShader.h"		//my custom shader class code is here
+#include "Camera.h"
 
 //callbacks for input and window events
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window);
+void processInput(GLFWwindow* window, Camera &currentCam);
 
 
 const int & InitialWindowWidth = 800;
@@ -24,6 +25,18 @@ float lastFrame = 0.0f;  //Gloabal value, time of last frame
 void UpdateDeltaTime();
 
 glm::vec4 InitialClearColor = { 0.07f, 0.13f, 0.17f, 1.0f };
+
+//DEFAULT CAMERA VALUES
+/*****************************************************************************/
+glm::vec3 default_eye_pos = vec3(0.0f, 0.0f, 5.0f);
+glm::vec3 default_up = vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 default_position_to_look_at = vec3(0.0f, 0.0f, 0.0f);
+float default_FOV = glm::radians(60.0f);
+//Aspect is given by window
+float default_near = 0.1f;
+float default_far = 100.0f;
+float default_cam_speed = 5.0f;
+/*****************************************************************************/
 
 int main()
 {
@@ -55,6 +68,18 @@ int main()
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, InitialWindowWidth, InitialWindowHeight);
+	//contruct the camera for the scene
+	
+	glm::vec3 eye_pos = default_eye_pos;
+	glm::vec3 up = default_up;
+	glm::vec3 position_to_look_at = default_position_to_look_at;
+	float FOV = default_FOV;
+	float aspect = (float)InitialWindowWidth / (float)InitialWindowHeight;
+	float near = default_near;
+	float far = default_far;
+	float speed = default_cam_speed;
+	//Camera Object
+	Camera mainCameraObject(eye_pos, up, position_to_look_at, FOV, aspect, near, far, speed);
 
 	CustomShader myShader("default.vert", "default.frag");
 	glEnable(GL_DEPTH_TEST);
@@ -120,11 +145,12 @@ int main()
 	//projection matrix
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	
 	glm::mat4 view = glm::mat4(1.0f);
 	// note that we're translating the scene in the reverse direction of where we want to move
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	view = mainCameraObject.GetViewMatrix();
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(45.0f), (float)InitialWindowWidth / (float)InitialWindowHeight, 0.1f, 100.0f);
+	projection = mainCameraObject.GetProjectionMatrix();
 
 	myShader.setMatrix4("model", &model);
 	myShader.setMatrix4("view", &view);
@@ -141,7 +167,13 @@ int main()
 		UpdateDeltaTime();
 
 		//Process Input from the user 
-		processInput(window);
+		processInput(window, mainCameraObject);
+
+		//Update camera Matrices in the shader
+		view = mainCameraObject.GetViewMatrix();
+		projection = mainCameraObject.GetProjectionMatrix();
+		myShader.setMatrix4("view", &view);
+		myShader.setMatrix4("projection", &projection);
 
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -210,10 +242,34 @@ int main()
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow* window)
+void processInput(GLFWwindow* window, Camera& currentCam)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		currentCam.ProcessKeyboard(Camera_Movement::FORWARD, deltaTime);
+		std::cout << "GLFW_KEY_W" << std::endl;
+
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		currentCam.ProcessKeyboard(Camera_Movement::BACKWARD, deltaTime);
+		std::cout << "GLFW_KEY_S" << std::endl;
+
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		currentCam.ProcessKeyboard(Camera_Movement::LEFT, deltaTime);
+		std::cout << "GLFW_KEY_A" << std::endl;
+
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		currentCam.ProcessKeyboard(Camera_Movement::RIGHT, deltaTime);
+		std::cout << "GLFW_KEY_D" << std::endl;
+
+	}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
