@@ -156,7 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CustomEBO.cpp" />
     <ClCompile Include="CustomShader.cpp" />
+    <ClCompile Include="CustomVAO.cpp" />
+    <ClCompile Include="CustomVBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -169,7 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CustomEBO.h" />
     <ClInclude Include="CustomShader.h" />
+    <ClInclude Include="CustomVAO.h" />
+    <ClInclude Include="CustomVBO.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_glfw.h" />
