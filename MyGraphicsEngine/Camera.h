@@ -117,6 +117,7 @@ public:
 		v2[0].w = Position.x;
 		v2[1].w = Position.y;
 		v2[2].w = Position.y;
+		SetViewMatrix(v2);
 	}
 private:
 	float mCamSpeed;
