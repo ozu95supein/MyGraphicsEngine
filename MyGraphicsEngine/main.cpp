@@ -17,8 +17,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window, Camera &currentCam);
 
 
-const int & InitialWindowWidth = 800;
-const int & InitialWindowHeight = 800;
+int WindowWidth = 800;
+int WindowHeight = 800;
 
 float deltaTime = 0.0f;  //Gloabal value, time between current frame and last frame
 float lastFrame = 0.0f;  //Gloabal value, time of last frame
@@ -52,7 +52,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
-	GLFWwindow* window = glfwCreateWindow(InitialWindowWidth, InitialWindowHeight, "ImGui + GLFW", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "Oscar's Game Engine", NULL, NULL);
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -67,14 +67,14 @@ int main()
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
-	glViewport(0, 0, InitialWindowWidth, InitialWindowHeight);
+	glViewport(0, 0, WindowWidth, WindowHeight);
 	//contruct the camera for the scene
 	
 	glm::vec3 eye_pos = default_eye_pos;
 	glm::vec3 up = default_up;
 	glm::vec3 position_to_look_at = default_position_to_look_at;
 	float FOV = default_FOV;
-	float aspect = (float)InitialWindowWidth / (float)InitialWindowHeight;
+	float aspect = (float)WindowWidth / (float)WindowHeight;
 	float near = default_near;
 	float far = default_far;
 	float speed = default_cam_speed;
@@ -279,6 +279,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
+	WindowWidth = width;
+	WindowHeight = height;
 }
 void UpdateDeltaTime()
 {
