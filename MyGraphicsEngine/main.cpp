@@ -1,8 +1,3 @@
-//------- Ignore this ----------
-#include<filesystem>
-namespace fs = std::filesystem;
-//------------------------------
-
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -243,6 +238,7 @@ int main()
 
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 		//Process Input from the user 
 		processInput(window, mainCameraObject);
 
@@ -265,11 +261,10 @@ int main()
 
 	// Texture
 	Texture popCat((parentDir + texPath + "pop_cat.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+=======
+	Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+>>>>>>> Copied and pasted everything from video 6, TEXTURES
 	popCat.texUnit(shaderProgram, "tex0", 0);
-
-	// Original code from the tutorial
-	/*Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	popCat.texUnit(shaderProgram, "tex0", 0);*/
 
 
 
