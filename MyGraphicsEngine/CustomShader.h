@@ -32,6 +32,7 @@ public:
 private:
     // the program ID
     GLuint ID;
+    void compileErrors(unsigned int shader, const char* type);
 };
 
 #endif

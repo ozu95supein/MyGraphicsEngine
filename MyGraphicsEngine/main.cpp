@@ -126,6 +126,7 @@ int main()
 	Camera mainCameraObject(eye_pos, up, position_to_look_at, FOV, aspect, near, far, speed);
 
 	CustomShader myShader("default.vert", "default.frag");
+	
 	glEnable(GL_DEPTH_TEST);
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 

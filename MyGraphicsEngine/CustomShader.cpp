@@ -35,6 +35,7 @@ GLuint CustomShader::CreateShader(const char* vertexPath, const char* fragmentPa
         std::cout << "Unable to link shader program." << std::endl;
         return 0;
     }
+    compileErrors(ID, "FRAGMENT");
     return handle;
 }
 
@@ -156,4 +157,29 @@ void CustomShader::setMatrix4(const std::string& name, glm::mat4* mat) const
 GLuint CustomShader::GetID()
 {
     return ID;
+}
+void CustomShader::compileErrors(unsigned int shader, const char* type)
+{
+    // Stores status of compilation
+    GLint hasCompiled;
+    // Character array to store error message in
+    char infoLog[1024];
+    if (type != "PROGRAM")
+    {
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
+        if (hasCompiled == GL_FALSE)
+        {
+            glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+            std::cout << "SHADER_COMPILATION_ERROR for:" << type << "\n" << infoLog << std::endl;
+        }
+    }
+    else
+    {
+        glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
+        if (hasCompiled == GL_FALSE)
+        {
+            glGetProgramInfoLog(shader, 1024, NULL, infoLog);
+            std::cout << "SHADER_LINKING_ERROR for:" << type << "\n" << infoLog << std::endl;
+        }
+    }
 }
