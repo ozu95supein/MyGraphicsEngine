@@ -73,6 +73,9 @@
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="stb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="imgui\imconfig.h">

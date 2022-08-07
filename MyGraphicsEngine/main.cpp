@@ -8,6 +8,7 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
+#include<stb/stb_image.h>
 
 #include "CustomShader.h"		//my custom shader class code is here
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -58,13 +59,11 @@ float default_cam_speed = 5.0f;
 // Vertices coordinates
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 GLfloat vertices[] =
-{ //               COORDINATES                  /     COLORS           //
-	-0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower left corner
-	 0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower right corner
-	 0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,     1.0f, 0.6f,  0.32f, // Upper corner
-	-0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner left
-	 0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner right
-	 0.0f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f  // Inner down
+{ //     COORDINATES     /        COLORS      /   TexCoord  //
+	-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+	-0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
+	 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
+	 0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
 };
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 =======
@@ -73,14 +72,14 @@ GLfloat vertices[] =
 // Indices for vertices order
 GLuint indices[] =
 {
-	0, 3, 5, // Lower left triangle
-	3, 2, 4, // Lower right triangle
-	5, 4, 1 // Upper triangle
+	0, 2, 1, // Upper triangle
+	0, 3, 2 // Lower triangle
 };
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 /*****************************************************************************/
 =======
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
+
 
 int main()
 {
@@ -185,6 +184,7 @@ int main()
 
 	//projection matrix
 	glm::mat4 model = glm::mat4(1.0f);
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	
 	glm::mat4 view = glm::mat4(1.0f);
@@ -192,6 +192,14 @@ int main()
 	view = mainCameraObject.GetViewMatrix();
 	glm::mat4 projection;
 	projection = mainCameraObject.GetProjectionMatrix();
+=======
+	//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::mat4 view = glm::mat4(1.0f);
+	// note that we're translating the scene in the reverse direction of where we want to move
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -20.0f));
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(45.0f), (float)InitialWindowWidth / (float)InitialWindowHeight, 0.01f, 100.0f);
+>>>>>>> transformations are wrong
 
 	myShader.setMatrix4("model", &model);
 	myShader.setMatrix4("view", &view);
@@ -235,7 +243,7 @@ int main()
 		// Only draw the triangle if the ImGUI checkbox is ticked
 		if (drawTriangle)
 			// Draw the triangle using the GL_TRIANGLES primitive
-			glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// ImGUI window creation
 		ImGui::Begin("My name is window, ImGUI window");
