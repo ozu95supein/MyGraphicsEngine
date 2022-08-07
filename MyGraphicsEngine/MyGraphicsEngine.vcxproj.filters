@@ -51,6 +51,7 @@
     <ClCompile Include="CustomShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +62,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CustomVAO.cpp">
+=======
+    <ClCompile Include="VBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EBO.cpp">
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -95,6 +105,7 @@
     <ClInclude Include="CustomShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,6 +116,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CustomVAO.h">
+=======
+    <ClInclude Include="VBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VAO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EBO.h">
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

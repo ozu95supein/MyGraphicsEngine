@@ -158,8 +158,12 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CustomEBO.cpp" />
     <ClCompile Include="CustomShader.cpp" />
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClCompile Include="CustomVAO.cpp" />
     <ClCompile Include="CustomVBO.cpp" />
+=======
+    <ClCompile Include="EBO.cpp" />
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
     <ClCompile Include="glad.c" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -169,13 +173,19 @@
     <ClCompile Include="imgui\imgui_tables.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="VAO.cpp" />
+    <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CustomEBO.h" />
     <ClInclude Include="CustomShader.h" />
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClInclude Include="CustomVAO.h" />
     <ClInclude Include="CustomVBO.h" />
+=======
+    <ClInclude Include="EBO.h" />
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_glfw.h" />
@@ -185,6 +195,8 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="VAO.h" />
+    <ClInclude Include="VBO.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="default.frag" />

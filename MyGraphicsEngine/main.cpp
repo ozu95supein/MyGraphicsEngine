@@ -10,10 +10,16 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #include "CustomShader.h"		//my custom shader class code is here
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 #include "CustomVBO.h"
 #include "CustomVAO.h"
 #include "CustomEBO.h"
 #include "Camera.h"
+=======
+#include "VAO.h"
+#include "VBO.h"
+#include "EBO.h"
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 //callbacks for input and window events
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -29,6 +35,7 @@ void UpdateDeltaTime();
 
 glm::vec4 InitialClearColor = { 0.07f, 0.13f, 0.17f, 1.0f };
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 //DEFAULT CAMERA VALUES
 /*****************************************************************************/
 glm::vec3 default_eye_pos = vec3(0.0f, 0.0f, 5.0f);
@@ -43,6 +50,10 @@ float default_cam_speed = 5.0f;
 
 // Vertices coordinates
 /*****************************************************************************/
+=======
+
+// Vertices coordinates
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 GLfloat vertices[] =
 {
 	-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
@@ -52,6 +63,10 @@ GLfloat vertices[] =
 	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner right
 	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f // Inner down
 };
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+=======
+
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 // Indices for vertices order
 GLuint indices[] =
 {
@@ -59,7 +74,10 @@ GLuint indices[] =
 	3, 2, 4, // Lower right triangle
 	5, 4, 1 // Upper triangle
 };
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 /*****************************************************************************/
+=======
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 int main()
 {
@@ -106,6 +124,7 @@ int main()
 
 	CustomShader myShader("default.vert", "default.frag");
 	glEnable(GL_DEPTH_TEST);
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 	//generate vertex array object and binds it
 	CustomVAO VAO1;
@@ -114,6 +133,17 @@ int main()
 	CustomVBO VBO1(vertices, sizeof(vertices));
 	// Generates Element Buffer Object and links it to indices
 	CustomEBO EBO1(indices, sizeof(indices));
+=======
+	
+	// Generates Vertex Array Object and binds it
+	VAO VAO1;
+	VAO1.Bind();
+
+	// Generates Vertex Buffer Object and links it to vertices
+	VBO VBO1(vertices, sizeof(vertices));
+	// Generates Element Buffer Object and links it to indices
+	EBO EBO1(indices, sizeof(indices));
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 	// Links VBO to VAO
 	VAO1.LinkVBO(VBO1, 0);
@@ -201,7 +231,7 @@ int main()
 		// Only draw the triangle if the ImGUI checkbox is ticked
 		if (drawTriangle)
 			// Draw the triangle using the GL_TRIANGLES primitive
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+			glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
 
 		// ImGUI window creation
 		ImGui::Begin("My name is window, ImGUI window");
@@ -237,8 +267,13 @@ int main()
 	ImGui::DestroyContext();
 
 	// Delete all the objects we've created
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	VBO1.Delete();
 	VAO1.Delete();
+=======
+	VAO1.Delete();
+	VBO1.Delete();
+>>>>>>> Added VBOs, VAOs, EBOs to this branch
 	EBO1.Delete();
 	myShader.~CustomShader();
 
