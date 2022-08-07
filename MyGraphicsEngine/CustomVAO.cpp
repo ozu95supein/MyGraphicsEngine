@@ -3,10 +3,9 @@
 CustomVAO::CustomVAO()
 {
 	glGenVertexArrays(1, &ID);
-
 }
 
-void CustomVAO::LinkVBO(CustomVBO VBO, GLuint layout)
+void CustomVAO::LinkVBO(CustomVBO & VBO, GLuint layout)
 {
 	VBO.Bind();
 	glVertexAttribPointer(layout, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);

@@ -9,7 +9,7 @@ public:
 	GLuint ID;
 	CustomVAO();
 	
-	void LinkVBO(CustomVBO VBO, GLuint layout);
+	void LinkVBO(CustomVBO & VBO, GLuint layout);
 	void Bind();
 	void Unbind();
 	void Delete();

@@ -10,6 +10,9 @@
 #include<glm/gtc/type_ptr.hpp>
 
 #include "CustomShader.h"		//my custom shader class code is here
+#include "CustomVBO.h"
+#include "CustomVAO.h"
+#include "CustomEBO.h"
 #include "Camera.h"
 
 //callbacks for input and window events
@@ -36,6 +39,26 @@ float default_FOV = glm::radians(60.0f);
 float default_near = 0.1f;
 float default_far = 100.0f;
 float default_cam_speed = 5.0f;
+/*****************************************************************************/
+
+// Vertices coordinates
+/*****************************************************************************/
+GLfloat vertices[] =
+{
+	-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
+	0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
+	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f, // Upper corner
+	-0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner left
+	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner right
+	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f // Inner down
+};
+// Indices for vertices order
+GLuint indices[] =
+{
+	0, 3, 5, // Lower left triangle
+	3, 2, 4, // Lower right triangle
+	5, 4, 1 // Upper triangle
+};
 /*****************************************************************************/
 
 int main()
@@ -83,37 +106,21 @@ int main()
 
 	CustomShader myShader("default.vert", "default.frag");
 	glEnable(GL_DEPTH_TEST);
-	// Vertices coordinates
-	GLfloat vertices[] =
-	{
-		-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
-		0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-		0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f // Upper corner
-	};
 
-	// Create reference containers for the Vartex Array Object and the Vertex Buffer Object
-	GLuint VAO, VBO;
+	//generate vertex array object and binds it
+	CustomVAO VAO1;
+	VAO1.Bind();
+	// Generates Vertex Buffer Object and links it to vertices
+	CustomVBO VBO1(vertices, sizeof(vertices));
+	// Generates Element Buffer Object and links it to indices
+	CustomEBO EBO1(indices, sizeof(indices));
 
-	// Generate the VAO and VBO with only 1 object each
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	// Make the VAO the current Vertex Array Object by binding it
-	glBindVertexArray(VAO);
-
-	// Bind the VBO specifying it's a GL_ARRAY_BUFFER
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// Introduce the vertices into the VBO
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	// Configure the Vertex Attribute so that OpenGL knows how to read the VBO
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	// Enable the Vertex Attribute so that OpenGL knows to use it
-	glEnableVertexAttribArray(0);
-
-	// Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	// Links VBO to VAO
+	VAO1.LinkVBO(VBO1, 0);
+	// Unbind all to prevent accidentally modifying them
+	VAO1.Unbind();
+	VBO1.Unbind();
+	EBO1.Unbind();
 
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
@@ -190,7 +197,7 @@ int main()
 		// Tell OpenGL which Shader Program we want to use
 		myShader.use();
 		// Bind the VAO so OpenGL knows to use it
-		glBindVertexArray(VAO);
+		VAO1.Bind();
 		// Only draw the triangle if the ImGUI checkbox is ticked
 		if (drawTriangle)
 			// Draw the triangle using the GL_TRIANGLES primitive
@@ -230,8 +237,9 @@ int main()
 	ImGui::DestroyContext();
 
 	// Delete all the objects we've created
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	VBO1.Delete();
+	VAO1.Delete();
+	EBO1.Delete();
 	myShader.~CustomShader();
 
 	// Delete window before ending the program
