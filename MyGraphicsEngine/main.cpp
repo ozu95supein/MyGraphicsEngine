@@ -1,15 +1,14 @@
-#include"imgui.h"
-#include"imgui_impl_glfw.h"
-#include"imgui_impl_opengl3.h"
+//------- Ignore this ----------
+#include<filesystem>
+namespace fs = std::filesystem;
+//------------------------------
 
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
-#include<glm/glm.hpp>
-#include<glm/gtc/matrix_transform.hpp>
-#include<glm/gtc/type_ptr.hpp>
 #include<stb/stb_image.h>
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 #include "CustomShader.h"		//my custom shader class code is here
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 #include "CustomVBO.h"
@@ -52,6 +51,16 @@ float default_cam_speed = 5.0f;
 
 =======
 >>>>>>> Fragment shader and buffer classes modified
+=======
+#include"Texture.h"
+#include"shaderClass.h"
+#include"VAO.h"
+#include"VBO.h"
+#include"EBO.h"
+
+
+
+>>>>>>> I quit, Im restarting this ffing project from scratch
 // Vertices coordinates
 /*****************************************************************************/
 =======
@@ -81,6 +90,7 @@ GLuint indices[] =
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 
+
 int main()
 {
 	// Initialize GLFW
@@ -95,7 +105,11 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "Oscar's Game Engine", NULL, NULL);
+=======
+	GLFWwindow* window = glfwCreateWindow(800, 800, "YoutubeOpenGL", NULL, NULL);
+>>>>>>> I quit, Im restarting this ffing project from scratch
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -110,6 +124,7 @@ int main()
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	glViewport(0, 0, WindowWidth, WindowHeight);
 	//contruct the camera for the scene
 	
@@ -138,6 +153,17 @@ int main()
 	CustomEBO EBO1(indices, sizeof(indices));
 =======
 	
+=======
+	glViewport(0, 0, 800, 800);
+
+
+
+	// Generates Shader object using shaders default.vert and default.frag
+	Shader shaderProgram("default.vert", "default.frag");
+
+
+
+>>>>>>> I quit, Im restarting this ffing project from scratch
 	// Generates Vertex Array Object and binds it
 	VAO VAO1;
 	VAO1.Bind();
@@ -149,13 +175,15 @@ int main()
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 	// Links VBO attributes such as coordinates and colors to VAO
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	// Unbind all to prevent accidentally modifying them
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -208,13 +236,13 @@ int main()
 
 	// Specify the color of the background
 	glClearColor(InitialClearColor.x, InitialClearColor.y, InitialClearColor.z, InitialClearColor.w);
+=======
+	// Gets ID of uniform called "scale"
+	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+>>>>>>> I quit, Im restarting this ffing project from scratch
 
-	// Main while loop
-	while (!glfwWindowShouldClose(window))
-	{
-		//Update the delta time global values
-		UpdateDeltaTime();
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 		//Process Input from the user 
 		processInput(window, mainCameraObject);
 
@@ -223,60 +251,52 @@ int main()
 		projection = mainCameraObject.GetProjectionMatrix();
 		myShader.setMatrix4("view", &view);
 		myShader.setMatrix4("projection", &projection);
+=======
+>>>>>>> I quit, Im restarting this ffing project from scratch
 
+	/*
+	* I'm doing this relative path thing in order to centralize all the resources into one folder and not
+	* duplicate them between tutorial folders. You can just copy paste the resources from the 'Resources'
+	* folder and then give a relative path from this folder to whatever resource you want to get to.
+	* Also note that this requires C++17, so go to Project Properties, C/C++, Language, and select C++17
+	*/
+	std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
+	std::string texPath = "/Resources/YoutubeOpenGL 6 - Textures/";
+
+	// Texture
+	Texture popCat((parentDir + texPath + "pop_cat.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	popCat.texUnit(shaderProgram, "tex0", 0);
+
+	// Original code from the tutorial
+	/*Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	popCat.texUnit(shaderProgram, "tex0", 0);*/
+
+
+
+	// Main while loop
+	while (!glfwWindowShouldClose(window))
+	{
+		// Specify the color of the background
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Tell OpenGL a new frame is about to begin
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-
-		model = glm::rotate(model, glm::radians(0.1f), glm::vec3(0.0f, 0.0f, 1.0f));
-		myShader.setMatrix4("model", &model);
-
+		glClear(GL_COLOR_BUFFER_BIT);
 		// Tell OpenGL which Shader Program we want to use
-		myShader.use();
+		shaderProgram.Activate();
+		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
+		glUniform1f(uniID, 0.5f);
+		// Binds texture so that is appears in rendering
+		popCat.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
-		// Only draw the triangle if the ImGUI checkbox is ticked
-		if (drawTriangle)
-			// Draw the triangle using the GL_TRIANGLES primitive
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		// ImGUI window creation
-		ImGui::Begin("My name is window, ImGUI window");
-		// Text that appears in the window
-		ImGui::Text("Hello there adventurer!");
-		// Checkbox that appears in the window
-		ImGui::Checkbox("Draw Triangle", &drawTriangle);
-		// Slider that appears in the window
-		ImGui::SliderFloat("Size", &size, 0.5f, 2.0f);
-		// Fancy color editor that appears in the window
-		ImGui::ColorEdit4("Color", color);
-		// Ends the window
-		ImGui::End();
-
-		myShader.use();
-		// Exporting variables to shaders
-		myShader.setFloat("size", size);
-		myShader.setFloat4("color", color[0], color[1], color[2], color[3]);
-
-		// Renders the ImGUI elements
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
 		glfwPollEvents();
 	}
 
-	// Deletes all ImGUI instances
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+
 
 	// Delete all the objects we've created
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -287,13 +307,14 @@ int main()
 	VBO1.Delete();
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 	EBO1.Delete();
-	myShader.~CustomShader();
-
+	popCat.Delete();
+	shaderProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
 	glfwTerminate();
 	return 0;
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
@@ -342,4 +363,6 @@ void UpdateDeltaTime()
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
+=======
+>>>>>>> I quit, Im restarting this ffing project from scratch
 }
