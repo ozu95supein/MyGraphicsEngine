@@ -11,6 +11,7 @@
 #include "VAO.h"
 #include "VBO.h"
 #include "EBO.h"
+#include "Camera.h"
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -38,6 +39,7 @@ float deltaTime = 0.0f;  //Gloabal value, time between current frame and last fr
 float lastFrame = 0.0f;  //Gloabal value, time of last frame
 void UpdateDeltaTime();
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 glm::vec4 InitialClearColor = { 0.07f, 0.13f, 0.17f, 1.0f };
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -69,6 +71,11 @@ float default_cam_speed = 5.0f;
 
 
 >>>>>>> I quit, Im restarting this ffing project from scratch
+=======
+const unsigned int width = 800;
+const unsigned int height = 800;
+
+>>>>>>> .
 // Vertices coordinates
 /*****************************************************************************/
 =======
@@ -198,6 +205,7 @@ int main()
 	EBO1.Unbind();
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	// Initialize ImGUI
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -285,15 +293,16 @@ int main()
 	Texture popCat("pop_cat.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 >>>>>>> Copied and pasted everything from video 6, TEXTURES
 =======
+=======
+>>>>>>> .
 	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 >>>>>>> 3d added. Tut 7
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
-	float rotation = 0.0f;
-	double prevTime = glfwGetTime();
-
 	glEnable(GL_DEPTH_TEST);
 
+
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -304,31 +313,8 @@ int main()
 		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
 
-		double currentTime = glfwGetTime();
-		if (currentTime - prevTime >= 1 / 60)
-		{
-			rotation += 0.01f;
-			prevTime = currentTime;
-		}
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
-
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		proj = glm::perspective(glm::radians(45.0f), (float)(800 / 800), 0.1f, 100.0f);
-		
-		// Outputs the matrices into the Vertex Shader
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
-		glUniform1f(uniID, 0.5f);
 		// Binds texture so that is appears in rendering
 		popCat.Bind();
 		// Bind the VAO so OpenGL knows to use it

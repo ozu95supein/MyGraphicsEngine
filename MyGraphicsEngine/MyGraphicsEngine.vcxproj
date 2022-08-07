@@ -156,12 +156,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClCompile Include="CustomEBO.cpp" />
     <ClCompile Include="CustomShader.cpp" />
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClCompile Include="CustomVAO.cpp" />
     <ClCompile Include="CustomVBO.cpp" />
 =======
+=======
+>>>>>>> .
     <ClCompile Include="EBO.cpp" />
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
     <ClCompile Include="glad.c" />
@@ -181,12 +184,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClInclude Include="CustomEBO.h" />
     <ClInclude Include="CustomShader.h" />
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
     <ClInclude Include="CustomVAO.h" />
     <ClInclude Include="CustomVBO.h" />
 =======
+=======
+>>>>>>> .
     <ClInclude Include="EBO.h" />
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
     <ClInclude Include="imgui\imconfig.h" />
