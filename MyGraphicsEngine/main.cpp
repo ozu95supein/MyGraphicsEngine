@@ -53,6 +53,7 @@ float default_cam_speed = 5.0f;
 #include"VBO.h"
 #include"EBO.h"
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 
 >>>>>>> I quit, Im restarting this ffing project from scratch
@@ -60,6 +61,8 @@ float default_cam_speed = 5.0f;
 /*****************************************************************************/
 =======
 
+=======
+>>>>>>> .
 // Vertices coordinates
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 GLfloat vertices[] =
@@ -83,8 +86,6 @@ GLuint indices[] =
 /*****************************************************************************/
 =======
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
-
-
 
 int main()
 {
@@ -151,14 +152,15 @@ int main()
 =======
 	glViewport(0, 0, 800, 800);
 
-
-
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 
 >>>>>>> I quit, Im restarting this ffing project from scratch
+=======
+>>>>>>> .
 	// Generates Vertex Array Object and binds it
 	VAO VAO1;
 	VAO1.Bind();
@@ -266,8 +268,6 @@ int main()
 >>>>>>> Copied and pasted everything from video 6, TEXTURES
 	popCat.texUnit(shaderProgram, "tex0", 0);
 
-
-
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -290,8 +290,6 @@ int main()
 		// Take care of all GLFW events
 		glfwPollEvents();
 	}
-
-
 
 	// Delete all the objects we've created
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
