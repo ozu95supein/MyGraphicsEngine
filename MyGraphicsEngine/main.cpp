@@ -1,3 +1,4 @@
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -72,11 +73,15 @@ float default_cam_speed = 5.0f;
 
 >>>>>>> I quit, Im restarting this ffing project from scratch
 =======
+=======
+#include "Mesh.h"
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 const unsigned int width = 800;
 const unsigned int height = 800;
 
 >>>>>>> .
 // Vertices coordinates
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 /*****************************************************************************/
 =======
 
@@ -90,6 +95,14 @@ GLfloat vertices[] =
 	-1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		0.0f, 1.0f,		0.0f, 1.0f, 0.0f,
 	 1.0f, 0.0f, -1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 1.0f,		0.0f, 1.0f, 0.0f,
 	 1.0f, 0.0f,  1.0f,		0.0f, 0.0f, 0.0f,		1.0f, 0.0f,		0.0f, 1.0f, 0.0f
+=======
+Vertex vertices[] =
+{ //               COORDINATES           /            COLORS          /           TexCoord         /       NORMALS         //
+	Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+	Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+	Vertex{glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
+	Vertex{glm::vec3(1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 };
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 =======
@@ -102,16 +115,16 @@ GLuint indices[] =
 	0, 2, 3
 };
 
-GLfloat lightVertices[] =
+Vertex lightVertices[] =
 { //     COORDINATES     //
-	-0.1f, -0.1f,  0.1f,
-	-0.1f, -0.1f, -0.1f,
-	 0.1f, -0.1f, -0.1f,
-	 0.1f, -0.1f,  0.1f,
-	-0.1f,  0.1f,  0.1f,
-	-0.1f,  0.1f, -0.1f,
-	 0.1f,  0.1f, -0.1f,
-	 0.1f,  0.1f,  0.1f
+	Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
+	Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
+	Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
+	Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
+	Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
+	Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
+	Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
+	Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
 };
 
 GLuint lightIndices[] =
@@ -142,7 +155,11 @@ double Global_Time_LastFrame = 0.0;
 double Global_CurrentTime = 0.0;
 void UpdateTimestep();
 /****************************************************************************/
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 >>>>>>> Basic Lighting done, we will move on to specular maps
+=======
+
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 int main()
 {
 	// Initialize GLFW
@@ -158,10 +175,14 @@ int main()
 
 	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	GLFWwindow* window = glfwCreateWindow(WindowWidth, WindowHeight, "Oscar's Game Engine", NULL, NULL);
 =======
 	GLFWwindow* window = glfwCreateWindow(800, 800, "YoutubeOpenGL", NULL, NULL);
 >>>>>>> I quit, Im restarting this ffing project from scratch
+=======
+	GLFWwindow* window = glfwCreateWindow(width, height, "YoutubeOpenGL", NULL, NULL);
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -176,6 +197,7 @@ int main()
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	glViewport(0, 0, WindowWidth, WindowHeight);
 	//contruct the camera for the scene
@@ -211,10 +233,20 @@ int main()
 
 
 
+=======
+	glViewport(0, 0, width, height);
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
+	// Original code from the tutorial
+	Texture textures[]
+	{
+		Texture("planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
+	};
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -345,21 +377,24 @@ int main()
 =======
 	//LIGHT CUBE OBJECT AND LIGHT SHADER CODE
 	/****************************************************************************/
+=======
+	// Store mesh data in vectors for the mesh
+	std::vector <Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+	std::vector <GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+	std::vector <Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+	// Create floor mesh
+	Mesh floor(verts, ind, tex);
+
+
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 	// Shader for light cube
 	Shader lightShader("light.vert", "light.frag");
-	// Generates Vertex Array Object and binds it
-	VAO lightVAO;
-	lightVAO.Bind();
-	// Generates Vertex Buffer Object and links it to vertices
-	VBO lightVBO(lightVertices, sizeof(lightVertices));
-	// Generates Element Buffer Object and links it to indices
-	EBO lightEBO(lightIndices, sizeof(lightIndices));
-	// Links VBO attributes such as coordinates and colors to VAO
-	lightVAO.LinkAttrib(lightVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
-	// Unbind all to prevent accidentally modifying them
-	lightVAO.Unbind();
-	lightVBO.Unbind();
-	lightEBO.Unbind();
+	// Store mesh data in vectors for the mesh
+	std::vector <Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
+	std::vector <GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
+	// Crate light mesh
+	Mesh light(lightVerts, lightInd, tex);
+
 
 
 
@@ -381,8 +416,8 @@ int main()
 	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-	/****************************************************************************/
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 
@@ -395,12 +430,18 @@ int main()
 	Texture planksSpec("planksSpec.png", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
 	planksSpec.texUnit(shaderProgram, "tex1", 1);
 >>>>>>> Specular maps complete
+=======
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
+
+
+
+	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
-
+	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
-	// Main while loop
+
 	while (!glfwWindowShouldClose(window))
 	{
 		//update the timestep to maintain the framerate
@@ -408,35 +449,20 @@ int main()
 
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clean the back buffer and assign the new color to it
+		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+		// Handles camera inputs
 		camera.Inputs(window, (float)Global_Delta_Time);
+		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		// Tells OpenGL which Shader Program we want to use
-		shaderProgram.Activate();
-		// Exports the camera Position to the Fragment Shader for specular lighting
-		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
-		// Export the camMatrix to the Vertex Shader of the pyramid
-		camera.Matrix(shaderProgram, "camMatrix");
-		// Binds texture so that is appears in rendering
-		planksTex.Bind();
-		planksSpec.Bind();
-		// Bind the VAO so OpenGL knows to use it
-		VAO1.Bind();
-		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
 
+		// Draws different meshes
+		floor.Draw(shaderProgram, camera);
+		light.Draw(lightShader, camera);
 
-		// Tells OpenGL which Shader Program we want to use
-		lightShader.Activate();
-		// Export the camMatrix to the Vertex Shader of the light cube
-		camera.Matrix(lightShader, "camMatrix");
-		// Bind the VAO so OpenGL knows to use it
-		lightVAO.Bind();
-		// Draw primitives, number of indices, datatype of indices, index of indices
-		glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -445,6 +471,7 @@ int main()
 	}
 
 	// Delete all the objects we've created
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	VBO1.Delete();
 	VAO1.Delete();
@@ -455,10 +482,9 @@ int main()
 	EBO1.Delete();
 	planksTex.Delete();
 	planksSpec.Delete();
+=======
+>>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 	shaderProgram.Delete();
-	lightVAO.Delete();
-	lightVBO.Delete();
-	lightEBO.Delete();
 	lightShader.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);

@@ -166,7 +166,7 @@ private:
 	// Adjust the speed of the camera and it's sensitivity when looking around
 	float DefaultCamSpeed = 1.0f;
 	float FastCamSpeed = DefaultCamSpeed * 4.0f;
-	float DefaultSensitivity = 30.0f;
+	float DefaultSensitivity = 40.0f;
 
 	float speed = DefaultCamSpeed;
 	float sensitivity = DefaultSensitivity;
