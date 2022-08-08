@@ -154,6 +154,7 @@ private:
 	glm::vec3 Position;
 	glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::mat4 cameraMatrix = glm::mat4(1.0f);
 
 	// Prevents the camera from jumping around when first clicking left click
 	bool firstClick = true;
@@ -163,15 +164,21 @@ private:
 	int height;
 
 	// Adjust the speed of the camera and it's sensitivity when looking around
-	float speed = 0.001f;
-	float sensitivity = 20.0f;
+	float DefaultCamSpeed = 1.0f;
+	float FastCamSpeed = DefaultCamSpeed * 4.0f;
+	float DefaultSensitivity = 30.0f;
+
+	float speed = DefaultCamSpeed;
+	float sensitivity = DefaultSensitivity;
 
 	// Camera constructor to set up initial values
 	Camera(int width, int height, glm::vec3 position);
 
 	// Updates and exports the camera matrix to the Vertex Shader
-	void Matrix(float FOVdeg, float nearPlane, float farPlane, Shader& shader, const char* uniform);
+	void updateMatrix(float FOVdeg, float nearPlane, float farPlane);
+	void Matrix(Shader shader, const char* uniform);
 	// Handles camera inputs
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	void Inputs(GLFWwindow* window);
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
@@ -180,6 +187,9 @@ private:
 >>>>>>> .
 };
 =======
+=======
+	void Inputs(GLFWwindow* window, float deltaTime);
+>>>>>>> Basic Lighting done, we will move on to specular maps
 };
 #endif
 >>>>>>> Camera done, with inputs

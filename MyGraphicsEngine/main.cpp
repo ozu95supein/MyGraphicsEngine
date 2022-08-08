@@ -85,12 +85,27 @@ const unsigned int height = 800;
 // Vertices coordinates
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 GLfloat vertices[] =
-{ //     COORDINATES     /        COLORS      /   TexCoord  //
-	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
-	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	5.0f, 0.0f,
-	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	2.5f, 5.0f
+{ //     COORDINATES     /        COLORS          /    TexCoord   /        NORMALS       //
+	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
+	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
+	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
+	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
+
+	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
+	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
+	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,     -0.8f, 0.5f,  0.0f, // Left Side
+
+	-0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
+	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
+	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
+
+	 0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
+	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
+	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.8f, 0.5f,  0.0f, // Right side
+
+	 0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
+	-0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
+	 0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f,  0.8f  // Facing side
 };
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 =======
@@ -99,18 +114,55 @@ GLfloat vertices[] =
 // Indices for vertices order
 GLuint indices[] =
 {
+	0, 1, 2, // Bottom side
+	0, 2, 3, // Bottom side
+	4, 6, 5, // Left side
+	7, 9, 8, // Non-facing side
+	10, 12, 11, // Right side
+	13, 15, 14 // Facing side
+};
+
+GLfloat lightVertices[] =
+{ //     COORDINATES     //
+	-0.1f, -0.1f,  0.1f,
+	-0.1f, -0.1f, -0.1f,
+	 0.1f, -0.1f, -0.1f,
+	 0.1f, -0.1f,  0.1f,
+	-0.1f,  0.1f,  0.1f,
+	-0.1f,  0.1f, -0.1f,
+	 0.1f,  0.1f, -0.1f,
+	 0.1f,  0.1f,  0.1f
+};
+
+GLuint lightIndices[] =
+{
 	0, 1, 2,
 	0, 2, 3,
-	0, 1, 4,
-	1, 2, 4,
-	2, 3, 4,
-	3, 0, 4
+	0, 4, 7,
+	0, 7, 3,
+	3, 7, 6,
+	3, 6, 2,
+	2, 6, 5,
+	2, 5, 1,
+	1, 5, 4,
+	1, 4, 0,
+	4, 5, 6,
+	4, 6, 7
 };
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 /*****************************************************************************/
 =======
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 
+=======
+/****************************************************************************/
+double Global_Delta_Time = 0.1;
+double Global_Time_LastFrame = 0.0;
+double Global_CurrentTime = 0.0;
+void UpdateTimestep();
+/****************************************************************************/
+>>>>>>> Basic Lighting done, we will move on to specular maps
 int main()
 {
 	// Initialize GLFW
@@ -196,14 +248,16 @@ int main()
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 	// Links VBO attributes such as coordinates and colors to VAO
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 11 * sizeof(float), (void*)0);
+	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
+	VAO1.LinkAttrib(VBO1, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
 	// Unbind all to prevent accidentally modifying them
 	VAO1.Unbind();
 	VBO1.Unbind();
 	EBO1.Unbind();
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 	// Initialize ImGUI
@@ -298,6 +352,49 @@ int main()
 	Texture popCat("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 >>>>>>> 3d added. Tut 7
 	popCat.texUnit(shaderProgram, "tex0", 0);
+=======
+	//LIGHT CUBE OBJECT AND LIGHT SHADER CODE
+	/****************************************************************************/
+	// Shader for light cube
+	Shader lightShader("light.vert", "light.frag");
+	// Generates Vertex Array Object and binds it
+	VAO lightVAO;
+	lightVAO.Bind();
+	// Generates Vertex Buffer Object and links it to vertices
+	VBO lightVBO(lightVertices, sizeof(lightVertices));
+	// Generates Element Buffer Object and links it to indices
+	EBO lightEBO(lightIndices, sizeof(lightIndices));
+	// Links VBO attributes such as coordinates and colors to VAO
+	lightVAO.LinkAttrib(lightVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+	// Unbind all to prevent accidentally modifying them
+	lightVAO.Unbind();
+	lightVBO.Unbind();
+	lightEBO.Unbind();
+
+	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
+	glm::mat4 lightModel = glm::mat4(1.0f);
+	lightModel = glm::translate(lightModel, lightPos);
+
+	glm::vec3 pyramidPos = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::mat4 pyramidModel = glm::mat4(1.0f);
+	pyramidModel = glm::translate(pyramidModel, pyramidPos);
+
+
+	lightShader.Activate();
+	glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
+	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	shaderProgram.Activate();
+	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(pyramidModel));
+	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+	/****************************************************************************/
+
+
+
+	Texture brickTex("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	brickTex.texUnit(shaderProgram, "tex0", 0);
+>>>>>>> Basic Lighting done, we will move on to specular maps
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -306,22 +403,40 @@ int main()
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
+		//update the timestep to maintain the framerate
+		UpdateTimestep();
+
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// Tell OpenGL which Shader Program we want to use
+
+		camera.Inputs(window, (float)Global_Delta_Time);
+		camera.updateMatrix(45.0f, 0.1f, 100.0f);
+
+		// Tells OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
-
-		camera.Inputs(window);
-		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
-
+		// Exports the camera Position to the Fragment Shader for specular lighting
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+		// Export the camMatrix to the Vertex Shader of the pyramid
+		camera.Matrix(shaderProgram, "camMatrix");
 		// Binds texture so that is appears in rendering
-		popCat.Bind();
+		brickTex.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
 		glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+
+
+		// Tells OpenGL which Shader Program we want to use
+		lightShader.Activate();
+		// Export the camMatrix to the Vertex Shader of the light cube
+		camera.Matrix(lightShader, "camMatrix");
+		// Bind the VAO so OpenGL knows to use it
+		lightVAO.Bind();
+		// Draw primitives, number of indices, datatype of indices, index of indices
+		glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
@@ -337,13 +452,14 @@ int main()
 	VBO1.Delete();
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 	EBO1.Delete();
-	popCat.Delete();
+	brickTex.Delete();
 	shaderProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
 	glfwTerminate();
 	return 0;
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
@@ -395,4 +511,12 @@ void UpdateDeltaTime()
 	lastFrame = currentFrame;
 =======
 >>>>>>> I quit, Im restarting this ffing project from scratch
+=======
+}
+void UpdateTimestep()
+{
+	Global_CurrentTime = glfwGetTime();
+	Global_Delta_Time = Global_CurrentTime - Global_Time_LastFrame;
+	Global_Time_LastFrame = Global_CurrentTime;
+>>>>>>> Basic Lighting done, we will move on to specular maps
 }
