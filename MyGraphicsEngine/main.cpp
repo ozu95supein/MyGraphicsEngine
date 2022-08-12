@@ -1,4 +1,5 @@
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 #include<iostream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
@@ -149,6 +150,13 @@ GLuint lightIndices[] =
 >>>>>>> Added VBOs, VAOs, EBOs to this branch
 
 =======
+=======
+#include"Model.h"
+
+const unsigned int width = 800;
+const unsigned int height = 800;
+
+>>>>>>> Made a model Loader using gtlf
 /****************************************************************************/
 double Global_Delta_Time = 0.1;
 double Global_Time_LastFrame = 0.0;
@@ -237,15 +245,10 @@ int main()
 	glViewport(0, 0, width, height);
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
-	// Original code from the tutorial
-	Texture textures[]
-	{
-		Texture("planks.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		Texture("planksSpec.png", "specular", 1, GL_RED, GL_UNSIGNED_BYTE)
-	};
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
@@ -398,22 +401,16 @@ int main()
 
 
 
+=======
+>>>>>>> Made a model Loader using gtlf
 
+	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	glm::vec3 lightPos = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::mat4 lightModel = glm::mat4(1.0f);
 	lightModel = glm::translate(lightModel, lightPos);
 
-	glm::vec3 objectPos = glm::vec3(0.0f, 0.0f, 0.0f);
-	glm::mat4 objectModel = glm::mat4(1.0f);
-	objectModel = glm::translate(objectModel, objectPos);
-
-
-	lightShader.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(lightShader.ID, "model"), 1, GL_FALSE, glm::value_ptr(lightModel));
-	glUniform4f(glGetUniformLocation(lightShader.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	shaderProgram.Activate();
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "model"), 1, GL_FALSE, glm::value_ptr(objectModel));
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
@@ -433,36 +430,33 @@ int main()
 =======
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
-
-
-
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
+	// Original code from the tutorial
+	Model model("models/bunny/scene.gltf");
+
+	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		//update the timestep to maintain the framerate
 		UpdateTimestep();
-
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
 		// Handles camera inputs
 		camera.Inputs(window, (float)Global_Delta_Time);
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-
-		// Draws different meshes
-		floor.Draw(shaderProgram, camera);
-		light.Draw(lightShader, camera);
-
+		// Draw a model
+		model.Draw(shaderProgram, camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -485,7 +479,6 @@ int main()
 =======
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 	shaderProgram.Delete();
-	lightShader.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
@@ -545,6 +538,7 @@ void UpdateDeltaTime()
 >>>>>>> I quit, Im restarting this ffing project from scratch
 =======
 }
+
 void UpdateTimestep()
 {
 	Global_CurrentTime = glfwGetTime();
