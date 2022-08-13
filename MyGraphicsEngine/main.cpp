@@ -421,6 +421,7 @@ int main()
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 
 	Texture brickTex("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
@@ -435,19 +436,21 @@ int main()
 =======
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
+=======
+>>>>>>> Added all models to see what happens
 	// Enables the Depth Buffer	
 	glEnable(GL_DEPTH_TEST);
 	// Enables the Stencil Buffer	
 	glEnable(GL_STENCIL_TEST);
 	// Sets rules for outcomes of stecil tests	
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-
-	// Creates camera object
+	// Creates camera object	
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
+
 	// Original code from the tutorial
-	//Model ground("models/ground/scene.gltf");
-	//Model trees("models/trees/scene.gltf");
+	Model ground("models/ground/scene.gltf");
+	Model trees("models/trees/scene.gltf");
 
 	// Load in models
 	Model model("models/crow/scene.gltf");
@@ -458,14 +461,13 @@ int main()
 	{
 		//update the timestep to maintain the framerate
 		UpdateTimestep();
-		// Specify the color of the background
+		// Specify the color of the background		
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-		// Clean the back buffer and depth buffer
+		// Clean the back buffer and depth buffer		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-		// Handles camera inputs
+		// Handles camera inputs		
 		camera.Inputs(window, (float)Global_Delta_Time);
-		// Updates and exports the camera matrix to the Vertex Shader
+		// Updates and exports the camera matrix to the Vertex Shader		
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
 		// Make it so the stencil test always passes
@@ -474,10 +476,17 @@ int main()
 		glStencilMask(0xFF);
 
 		// Draw models	
-		//ground.Draw(shaderProgram, camera);
-		//trees.Draw(shaderProgram, camera);
+		ground.Draw(shaderProgram, camera);
+		trees.Draw(shaderProgram, camera);
 		model.Draw(shaderProgram, camera);
-
+		//***************************IMPORTANT*************************************//
+		// Make it so only the pixels without the value 1 pass the test		
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);				//Without this the stencil buffer overrides the color buffer ant its all white
+		// Disable modifying of the stencil buffer		
+		glStencilMask(0x00);
+		// Disable the depth buffer		
+		glDisable(GL_DEPTH_TEST);
+		//***************************IMPORTANT*************************************//
 		// Third method from the tutorial	
 		outline.Draw(outliningProgram, camera);
 

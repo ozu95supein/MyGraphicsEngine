@@ -256,18 +256,17 @@ std::vector<Texture> Model::getTextures()
 		}
 
 		// If the texture has been loaded, skip this
-		if (!skip)
 		{
-			// Load diffuse texture
-			if (texPath.find("baseColor") != std::string::npos)
+			// Load diffuse texture	
+			if (texPath.find("baseColor") != std::string::npos || texPath.find("diffuse") != std::string::npos)
 			{
 				Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", loadedTex.size());
 				textures.push_back(diffuse);
 				loadedTex.push_back(diffuse);
 				loadedTexName.push_back(texPath);
 			}
-			// Load specular texture
-			else if (texPath.find("metallicRoughness") != std::string::npos)
+			// Load specular texture	
+			else if (texPath.find("metallicRoughness") != std::string::npos || texPath.find("specular") != std::string::npos)
 			{
 				Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", loadedTex.size());
 				textures.push_back(specular);
