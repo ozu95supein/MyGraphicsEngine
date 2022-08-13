@@ -183,6 +183,18 @@
     <None Include="light.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="outlining.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="outlining.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="defaultDepthTest.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="defaultDepthTest.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pop_cat.png">

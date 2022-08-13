@@ -251,6 +251,7 @@ int main()
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 
@@ -403,6 +404,10 @@ int main()
 
 =======
 >>>>>>> Made a model Loader using gtlf
+=======
+	// Shader for the outlining model
+	Shader outliningProgram("outlining.vert", "outlining.frag");
+>>>>>>> Something is Wrong with the Stencil Buffer, need to check stuff 1 by 1
 
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -430,36 +435,60 @@ int main()
 =======
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 
-	// Enables the Depth Buffer
+	// Enables the Depth Buffer	
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	// Enables the Stencil Buffer	
+	glEnable(GL_STENCIL_TEST);
+	// Sets rules for outcomes of stecil tests	
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 	// Original code from the tutorial
-	Model ground("models/ground/scene.gltf");
-	Model trees("models/trees/scene.gltf");
-	
+	//Model ground("models/ground/scene.gltf");
+	//Model trees("models/trees/scene.gltf");
+
+	// Load in models
+	Model model("models/crow/scene.gltf");
+	Model outline("models/crow-outline/scene.gltf");
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		//update the timestep to maintain the framerate
 		UpdateTimestep();
 		// Specify the color of the background
-		glClearColor(0.60f, 0.60f, 0.90f, 1.0f);
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 		// Handles camera inputs
 		camera.Inputs(window, (float)Global_Delta_Time);
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
+		// Make it so the stencil test always passes
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		// Enable modifying of the stencil buffer
+		glStencilMask(0xFF);
+
 		// Draw models	
-		ground.Draw(shaderProgram, camera);
-		trees.Draw(shaderProgram, camera);
-		
+		//ground.Draw(shaderProgram, camera);
+		//trees.Draw(shaderProgram, camera);
+		model.Draw(shaderProgram, camera);
+
+		// Third method from the tutorial	
+		outline.Draw(outliningProgram, camera);
+
+		// Enable modifying of the stencil buffer	
+		glStencilMask(0xFF);
+		// Clear stencil buffer	
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		// Enable the depth buffer	
+		glEnable(GL_DEPTH_TEST);
+
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
 		// Take care of all GLFW events
@@ -481,6 +510,7 @@ int main()
 =======
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
 	shaderProgram.Delete();
+	outliningProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
