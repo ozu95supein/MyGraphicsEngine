@@ -161,7 +161,9 @@ const unsigned int height = 800;
 double Global_Delta_Time = 0.1;
 double Global_Time_LastFrame = 0.0;
 double Global_CurrentTime = 0.0;
-void UpdateTimestep();
+unsigned int Global_FrameCounter = 0;
+double Global_FrameTimeStep = 1.0 / 30.0;
+void UpdateTimestep(GLFWwindow* window);
 /****************************************************************************/
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 >>>>>>> Basic Lighting done, we will move on to specular maps
@@ -440,6 +442,11 @@ int main()
 >>>>>>> Added all models to see what happens
 	// Enables the Depth Buffer	
 	glEnable(GL_DEPTH_TEST);
+	// Enables Face Culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+	glFrontFace(GL_CCW);
+
 	// Enables the Stencil Buffer	
 	glEnable(GL_STENCIL_TEST);
 	// Sets rules for outcomes of stecil tests	
@@ -448,19 +455,22 @@ int main()
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
 
-	// Original code from the tutorial
-	Model ground("models/ground/scene.gltf");
-	Model trees("models/trees/scene.gltf");
+	// Original code from earlier tutorials
+	//Model ground("models/ground/scene.gltf");
+	//Model trees("models/trees/scene.gltf");
+	//
+	//// Load in models
+	//Model model("models/crow/scene.gltf");
+	//Model outline("models/crow-outline/scene.gltf");
+	Model statue("models/statue/scene.gltf");
 
-	// Load in models
-	Model model("models/crow/scene.gltf");
-	Model outline("models/crow-outline/scene.gltf");
+
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
 		//update the timestep to maintain the framerate
-		UpdateTimestep();
+		UpdateTimestep(window);
 		// Specify the color of the background		
 		glClearColor(0.0f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer		
@@ -476,9 +486,12 @@ int main()
 		glStencilMask(0xFF);
 
 		// Draw models	
-		ground.Draw(shaderProgram, camera);
-		trees.Draw(shaderProgram, camera);
-		model.Draw(shaderProgram, camera);
+		//ground.Draw(shaderProgram, camera);
+		//trees.Draw(shaderProgram, camera);
+		//model.Draw(shaderProgram, camera);
+		 
+		statue.Draw(shaderProgram, camera);
+
 		//***************************IMPORTANT*************************************//
 		// Make it so only the pixels without the value 1 pass the test		
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);				//Without this the stencil buffer overrides the color buffer ant its all white
@@ -488,7 +501,7 @@ int main()
 		glDisable(GL_DEPTH_TEST);
 		//***************************IMPORTANT*************************************//
 		// Third method from the tutorial	
-		outline.Draw(outliningProgram, camera);
+		//outline.Draw(outliningProgram, camera);
 
 		// Enable modifying of the stencil buffer	
 		glStencilMask(0xFF);
@@ -580,10 +593,27 @@ void UpdateDeltaTime()
 =======
 }
 
-void UpdateTimestep()
+void UpdateTimestep(GLFWwindow* window)
 {
 	Global_CurrentTime = glfwGetTime();
 	Global_Delta_Time = Global_CurrentTime - Global_Time_LastFrame;
 	Global_Time_LastFrame = Global_CurrentTime;
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 >>>>>>> Basic Lighting done, we will move on to specular maps
+=======
+	Global_FrameCounter++;
+	if (Global_Delta_Time >= Global_FrameTimeStep)
+	{
+		//create new title with frames
+		// Creates new title
+		std::string FPS = std::to_string((1.0 / Global_Delta_Time) * Global_FrameCounter);
+		std::string ms = std::to_string((Global_Delta_Time / Global_FrameCounter) * 1000);
+		std::string newTitle = "YoutubeOpenGL - " + FPS + "FPS / " + ms + "ms";
+		glfwSetWindowTitle(window, newTitle.c_str());
+
+		// Resets times and counter
+		Global_Time_LastFrame = Global_CurrentTime;
+		Global_FrameCounter = 0;
+	}
+>>>>>>> enabled culling and made a frame counter
 }
