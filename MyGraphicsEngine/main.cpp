@@ -169,7 +169,26 @@ void UpdateTimestep(GLFWwindow* window);
 >>>>>>> Basic Lighting done, we will move on to specular maps
 =======
 
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 >>>>>>> Mesh class implemented alongside lighting and texture shader stuff
+=======
+// Takes care of the information needed to draw the windows
+const unsigned int numWindows = 100;
+glm::vec3 positionsWin[numWindows];
+float rotationsWin[numWindows];
+
+// Takes care of drawing the windows in the right order
+unsigned int orderDraw[numWindows];
+float distanceCamera[numWindows];
+
+// Compare function
+int compare(const void* a, const void* b)
+{
+	double diff = distanceCamera[*(int*)b] - distanceCamera[*(int*)a];
+	return  (0 < diff) - (diff < 0);
+}
+
+>>>>>>> changed the rendering of the mesh and implemented blending
 int main()
 {
 	// Initialize GLFW
@@ -250,6 +269,7 @@ int main()
 
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("default.vert", "default.frag");
+<<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -407,6 +427,10 @@ int main()
 =======
 >>>>>>> Made a model Loader using gtlf
 =======
+=======
+	Shader grassProgram("default.vert", "grass.frag");
+	Shader winProgram("default.vert", "windows.frag");
+>>>>>>> changed the rendering of the mesh and implemented blending
 	// Shader for the outlining model
 	Shader outliningProgram("outlining.vert", "outlining.frag");
 >>>>>>> Something is Wrong with the Stencil Buffer, need to check stuff 1 by 1
@@ -420,6 +444,9 @@ int main()
 	shaderProgram.Activate();
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
+	grassProgram.Activate();
+	glUniform4f(glGetUniformLocation(grassProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
+	glUniform3f(glGetUniformLocation(grassProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
 <<<<<<< d1b6c5a5e16696bdb6ae98568c0c79773e79b369
@@ -446,6 +473,8 @@ int main()
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
 	glFrontFace(GL_CCW);
+	// Configures the blending function
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Enables the Stencil Buffer	
 	glEnable(GL_STENCIL_TEST);
@@ -462,9 +491,25 @@ int main()
 	//// Load in models
 	//Model model("models/crow/scene.gltf");
 	//Model outline("models/crow-outline/scene.gltf");
-	Model statue("models/statue/scene.gltf");
+	// Load in models
+	Model ground("models/ground/scene.gltf");
+	Model grass("models/grass/scene.gltf");
+	Model windows("models/windows/scene.gltf");
 
+	//Model statue("models/statue/scene.gltf");
 
+	// Generates all windows
+	for (unsigned int i = 0; i < numWindows; i++)
+	{
+		positionsWin[i] = glm::vec3
+		(
+			-15.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (15.0f - (-15.0f)))),
+			1.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (4.0f - 1.0f))),
+			-15.0f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (15.0f - (-15.0f))))
+		);
+		rotationsWin[i] = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.0f));
+		orderDraw[i] = i;
+	}
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -490,9 +535,33 @@ int main()
 		//trees.Draw(shaderProgram, camera);
 		//model.Draw(shaderProgram, camera);
 		 
-		statue.Draw(shaderProgram, camera);
+		//statue.Draw(shaderProgram, camera);
+		
+		//***************************BLENDING TUT*************************************//
+		// Draw the normal model
+		ground.Draw(shaderProgram, camera);
+		// Disable cull face so that grass and windows have both faces
+		glDisable(GL_CULL_FACE);
+		grass.Draw(grassProgram, camera);
+		// Enable blending for windows
+		glEnable(GL_BLEND);
+		// Get distance from each window to the camera
+		for (unsigned int i = 0; i < numWindows; i++)
+		{
+			distanceCamera[i] = glm::length(camera.Position - positionsWin[i]);
+		}
+		// Sort windows by distance from camera
+		qsort(orderDraw, numWindows, sizeof(unsigned int), compare);
+		// Draw windows
+		for (unsigned int i = 0; i < numWindows; i++)
+		{
+			windows.Draw(winProgram, camera, positionsWin[orderDraw[i]], glm::quat(1.0f, 0.0f, rotationsWin[orderDraw[i]], 0.0f));
+		}
+		glDisable(GL_BLEND);
+		glEnable(GL_CULL_FACE);
 
-		//***************************IMPORTANT*************************************//
+		//***************************BLENDING TUT*************************************//
+
 		// Make it so only the pixels without the value 1 pass the test		
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);				//Without this the stencil buffer overrides the color buffer ant its all white
 		// Disable modifying of the stencil buffer		

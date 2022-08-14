@@ -195,6 +195,12 @@
     <None Include="defaultDepthTest.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="windows.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="grass.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pop_cat.png">
