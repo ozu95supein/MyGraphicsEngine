@@ -201,6 +201,12 @@
     <None Include="grass.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="skybox.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="pop_cat.png">
