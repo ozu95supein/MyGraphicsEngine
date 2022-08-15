@@ -14,12 +14,12 @@ Model::Model(const char* file)
 	traverseNode(0);
 }
 
-void Model::Draw(Shader& shader, Camera& camera, glm::vec3 translation, glm::quat rotation, glm::vec3 scale)
+void Model::Draw(Shader& shader, Camera& camera)
 {
 	// Go over all meshes and draw each one
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Mesh::Draw(shader, camera, matricesMeshes[i], translation, rotation, scale);
+		meshes[i].Mesh::Draw(shader, camera, matricesMeshes[i]);
 	}
 }
 
@@ -190,9 +190,7 @@ std::vector<GLuint> Model::getIndices(json accessor)
 
 	// Get properties from the bufferView
 	json bufferView = JSON["bufferViews"][buffViewInd];
-	
-	//unsigned int byteOffset = bufferView["byteOffset"];
-	unsigned int byteOffset = bufferView.value("byteOffset", 0);
+	unsigned int byteOffset = bufferView["byteOffset"];
 
 	// Get indices with regards to their type: unsigned int, unsigned short, or short
 	unsigned int beginningOfData = byteOffset + accByteOffset;
@@ -256,8 +254,9 @@ std::vector<Texture> Model::getTextures()
 		}
 
 		// If the texture has been loaded, skip this
+		if (!skip)
 		{
-			// Load diffuse texture	
+			// Load diffuse texture
 			if (texPath.find("baseColor") != std::string::npos || texPath.find("diffuse") != std::string::npos)
 			{
 				Texture diffuse = Texture((fileDirectory + texPath).c_str(), "diffuse", loadedTex.size());
@@ -265,7 +264,7 @@ std::vector<Texture> Model::getTextures()
 				loadedTex.push_back(diffuse);
 				loadedTexName.push_back(texPath);
 			}
-			// Load specular texture	
+			// Load specular texture
 			else if (texPath.find("metallicRoughness") != std::string::npos || texPath.find("specular") != std::string::npos)
 			{
 				Texture specular = Texture((fileDirectory + texPath).c_str(), "specular", loadedTex.size());

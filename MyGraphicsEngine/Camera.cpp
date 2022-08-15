@@ -20,50 +20,52 @@ void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	// Adds perspective to the scene
 	projection = glm::perspective(glm::radians(FOVdeg), (float)width / height, nearPlane, farPlane);
 
+	// Sets new camera matrix
 	cameraMatrix = projection * view;
 }
-void Camera::Matrix(Shader shader, const char* uniform)
+
+void Camera::Matrix(Shader& shader, const char* uniform)
 {
-	// Exports the camera matrix to the Vertex Shader
+	// Exports camera matrix
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(cameraMatrix));
 }
 
 
-void Camera::Inputs(GLFWwindow* window, float deltaTime)
+
+void Camera::Inputs(GLFWwindow* window)
 {
-	float MoveSpeed = speed * deltaTime;
 	// Handles key inputs
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * Orientation;
+		Position += speed * Orientation;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * -glm::normalize(glm::cross(Orientation, Up));
+		Position += speed * -glm::normalize(glm::cross(Orientation, Up));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * -Orientation;
+		Position += speed * -Orientation;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * glm::normalize(glm::cross(Orientation, Up));
+		Position += speed * glm::normalize(glm::cross(Orientation, Up));
 	}
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * Up;
+		Position += speed * Up;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		Position += MoveSpeed * -Up;
+		Position += speed * -Up;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		speed = FastCamSpeed;
+		speed = 0.4f;
 	}
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 	{
-		speed = DefaultCamSpeed;
+		speed = 0.1f;
 	}
 
 

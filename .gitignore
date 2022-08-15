@@ -6,6 +6,8 @@
 BUILD/
 OBJ/
 x64/
+Resources/
+models/
 
 # User-specific files
 *.rsuser
