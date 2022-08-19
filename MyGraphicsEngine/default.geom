@@ -3,6 +3,7 @@
 layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
+
 out vec3 Normal;
 out vec3 color;
 out vec2 texCoord;
@@ -14,7 +15,6 @@ in DATA
 	vec2 texCoord;
     mat4 projection;
 } data_in[];
-
 
 // Default main function
 void main()

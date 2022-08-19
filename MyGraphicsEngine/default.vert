@@ -18,7 +18,7 @@ out DATA
     mat4 projection;
 } data_out;
 
-
+out vec3 crntPos;
 
 // Imports the camera matrix
 uniform mat4 camMatrix;
@@ -31,9 +31,11 @@ uniform mat4 scale;
 
 void main()
 {
+	
 	gl_Position = model * translation * rotation * scale * vec4(aPos, 1.0f);
 	data_out.Normal = aNormal;
 	data_out.color = aColor;
 	data_out.texCoord = mat2(0.0, -1.0, 1.0, 0.0) * aTex;
 	data_out.projection = camMatrix;
+	crntPos = gl_Position.xyz;
 }
