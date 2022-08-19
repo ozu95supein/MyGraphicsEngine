@@ -1,15 +1,17 @@
 #include"Model.h"
 
+const unsigned int START_width = 800;
+const unsigned int START_height = 800;
+unsigned int width = START_width;
+unsigned int height = START_height;
 
-const unsigned int width = 800;
-const unsigned int height = 800;
-
+// Window size callback for when the window is resized
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 int main()
 {
 	// Initialize GLFW
 	glfwInit();
-
 	// Tell GLFW what version of OpenGL we are using 
 	// In this case we are using OpenGL 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -32,20 +34,14 @@ int main()
 
 	//Load GLAD so it configures OpenGL
 	gladLoadGL();
+
 	// Specify the viewport of OpenGL in the Window
-	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
 
 
-
-
-
 	// Generates Shader object using shaders default.vert and default.frag
-	std::cout << "Number 1" << std::endl;
 	Shader shaderProgram("default.vert", "default.frag", "default.geom");
-	std::cout << "Number 2" << std::endl;
 	Shader normalsShader("default.vert", "normals.frag", "normals.geom");
-	std::cout << "Number 3" << std::endl;
 
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -57,9 +53,6 @@ int main()
 	glUniform4f(glGetUniformLocation(shaderProgram.ID, "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
 	glUniform3f(glGetUniformLocation(shaderProgram.ID, "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
-
-
-	
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
@@ -74,19 +67,10 @@ int main()
 	// Creates camera object
 	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
 
-
-	/*
-	* I'm doing this relative path thing in order to centralize all the resources into one folder and not
-	* duplicate them between tutorial folders. You can just copy paste the resources from the 'Resources'
-	* folder and then give a relative path from this folder to whatever resource you want to get to.
-	* Also note that this requires C++17, so go to Project Properties, C/C++, Language, and select C++17
-	*/
 	std::string modelPath = "models/statue/scene.gltf";
 	
 	// Load in models
 	Model model(modelPath.c_str());
-
-
 
 	// Variables to create periodic event for FPS displaying
 	double prevTime = 0.0;
@@ -95,10 +79,8 @@ int main()
 	// Keeps track of the amount of frames in timeDiff
 	unsigned int counter = 0;
 
-	// Use this to disable VSync (not advized)
-	//glfwSwapInterval(0);
-
-
+	// Specify the color of the background
+	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
@@ -123,9 +105,6 @@ int main()
 			// Use this if you have disabled VSync
 			//camera.Inputs(window);
 		}
-
-		// Specify the color of the background
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -146,8 +125,6 @@ int main()
 		glfwPollEvents();
 	}
 
-
-
 	// Delete all the objects we've created
 	shaderProgram.Delete();
 	normalsShader.Delete();
@@ -156,4 +133,9 @@ int main()
 	// Terminate GLFW before ending the program
 	glfwTerminate();
 	return 0;
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	glViewport(0, 0, width, height);
 }
