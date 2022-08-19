@@ -6,7 +6,7 @@ unsigned int width = START_width;
 unsigned int height = START_height;
 
 // Window size callback for when the window is resized
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void framebuffer_size_callback(GLFWwindow* window, int n_width, int n_height);
 
 int main()
 {
@@ -135,7 +135,9 @@ int main()
 	return 0;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void framebuffer_size_callback(GLFWwindow* window, int n_width, int n_height)
 {
+	width = width;
+	height = height;
 	glViewport(0, 0, width, height);
 }
