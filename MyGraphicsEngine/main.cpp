@@ -1,4 +1,5 @@
 #include"Model.h"
+#include "InputManager.h"
 
 const unsigned int START_width = 800;
 const unsigned int START_height = 800;
@@ -81,6 +82,7 @@ int main()
 	// Specify the color of the background
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
+	InputManager mInputManager(window, & camera);
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -108,7 +110,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Handles camera inputs (delete this if you have disabled VSync)
-		camera.Inputs(window);
+		mInputManager.ReceiveInputs();
+		//camera.Inputs(window);
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 

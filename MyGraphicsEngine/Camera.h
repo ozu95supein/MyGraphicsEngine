@@ -42,5 +42,17 @@ public:
 	void Matrix(Shader& shader, const char* uniform);
 	// Handles camera inputs
 	void Inputs(GLFWwindow* window);
+
+	void Camera_Forward();
+	void Camera_Left();
+	void Camera_Back();
+	void Camera_Right();
+	void Camera_Up();
+	void Camera_Down();
+	void Camera_Speed_Faster();
+	void Camera_Speed_Normal();
+	void Camera_MouseLook(GLFWwindow* window);
+	void Camera_Mouse_Look_Release(GLFWwindow* window);
 };
 #endif
+
