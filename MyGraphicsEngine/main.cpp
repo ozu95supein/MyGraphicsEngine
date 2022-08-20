@@ -38,10 +38,9 @@ int main()
 	// Specify the viewport of OpenGL in the Window
 	glViewport(0, 0, width, height);
 
-
 	// Generates Shader object using shaders default.vert and default.frag
-	Shader shaderProgram("default.vert", "default.frag", "default.geom");
-	Shader normalsShader("default.vert", "normals.frag", "normals.geom");
+	Shader shaderProgram("default.vert", "default.frag");
+
 
 	// Take care of all the light related things
 	glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -117,7 +116,7 @@ int main()
 		// Draw the normal model
 		model.Draw(shaderProgram, camera);
 		// Draw the normals
-		model.Draw(normalsShader, camera);
+		//model.Draw(normalsShader, camera);
 
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window);
@@ -127,7 +126,6 @@ int main()
 
 	// Delete all the objects we've created
 	shaderProgram.Delete();
-	normalsShader.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
 	// Terminate GLFW before ending the program
