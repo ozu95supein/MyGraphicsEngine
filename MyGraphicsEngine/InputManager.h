@@ -20,6 +20,7 @@ public:
 	void Input_Release_LSHIFT();
 	void Input_Press_MOUSE_LEFT();
 	void Input_Release_MOUST_LEFT();
+	void Input_Press_ESC();
 
 private:
 	GLFWwindow* mCurrentWindow;

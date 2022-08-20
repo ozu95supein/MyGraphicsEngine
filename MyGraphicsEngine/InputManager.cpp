@@ -52,6 +52,10 @@ void InputManager::ReceiveInputs()
 	{
 		Input_Release_MOUST_LEFT();
 	}
+	if (glfwGetKey(mCurrentWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		Input_Press_ESC();
+	}
 }
 //these inputs will do whatever the program has been set to do on said received input, in this case, they will manipulate the camera object
 void InputManager::Input_Press_W()
@@ -61,45 +65,40 @@ void InputManager::Input_Press_W()
 void InputManager::Input_Press_A()
 {
 	mCurrentCamera->Camera_Left();
-
 }
 void InputManager::Input_Press_S()
 {
 	mCurrentCamera->Camera_Back();
-
 }
 void InputManager::Input_Press_D()
 {
 	mCurrentCamera->Camera_Right();
-
 }
 void InputManager::Input_Press_SPACE()
 {
 	mCurrentCamera->Camera_Up();
-
 }
 void InputManager::Input_Press_LCTRL()
 {
 	mCurrentCamera->Camera_Down();
-
 }
 void InputManager::Input_Press_LSHIFT()
 {
 	mCurrentCamera->Camera_Speed_Faster();
-
 }
 void InputManager::Input_Release_LSHIFT()
 {
 	mCurrentCamera->Camera_Speed_Normal();
-
 }
 void InputManager::Input_Press_MOUSE_LEFT()
 {
 	mCurrentCamera->Camera_MouseLook(mCurrentWindow);
-
 }
 void InputManager::Input_Release_MOUST_LEFT()
 {
 	mCurrentCamera->Camera_Mouse_Look_Release(mCurrentWindow);
-
+}
+void InputManager::Input_Press_ESC()
+{
+	glfwSetWindowShouldClose(mCurrentWindow, GL_TRUE);
 }
